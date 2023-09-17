@@ -1,0 +1,17 @@
+
+module mux_4x1_case(input logic [3:0]d, input logic [1:0]s, output logic f
+    );
+    
+    always@(*)
+    begin
+    
+    case(s)
+    2'b00:f=d[0];
+    2'b01:f=d[1];
+    2'b10:f=d[2];
+    2'b11:f=d[3];
+   
+    endcase
+    
+    end
+endmodule
