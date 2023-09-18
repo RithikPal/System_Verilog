@@ -1,0 +1,22 @@
+module Majority_Minority(
+input logic [5:0]D,
+output logic X ,Y
+    );
+
+logic [2:0]count=0;    
+always_comb
+begin
+count=0;
+for(int i=0;i<=5;i=i+1)begin
+if(D[i]==1)
+count=count+1;
+end
+if(count>3)begin X=1;Y=0;end
+else if (count<3)begin Y=1;X=0; end
+else
+begin
+X=1;
+Y=1;
+end
+end
+endmodule
