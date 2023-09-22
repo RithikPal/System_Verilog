@@ -1,0 +1,13 @@
+module Count_No_of_Ones(input logic [5:0]D,
+                        output logic [2:0]count
+
+    );
+int i;
+always_comb
+begin
+count=0;
+for(i=0;i<=5;i++)begin
+if(D[i]==1) count=count+1;
+end
+end
+endmodule
