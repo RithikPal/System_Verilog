@@ -1,0 +1,19 @@
+
+module Complement_2s (
+  input logic [3:0] in,
+  output logic [3:0] out
+);
+
+  logic [3:0] K;
+  assign K = ~in;
+  
+  logic [3:0] one = 4'b0001;
+  logic [3:0] sum;
+  logic carry;
+
+  assign {carry, sum} =K + one;
+
+  
+  assign out = sum;
+
+endmodule
