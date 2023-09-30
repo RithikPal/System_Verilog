@@ -1,0 +1,35 @@
+module Top_Counter(input logic clk,rst,
+                   output logic [3:0]count);
+logic out; 
+one_sec_led o1(clk,rst,out);
+Counter_4_Bit C1(out,rst,count);
+endmodule
+
+module one_sec_led(
+    input logic clk,rst,
+    output logic out
+    );
+ logic [26:0]count;
+always_ff@(posedge clk)
+if(!rst) begin count<=0; out<=0; end
+else if(count==62499999) begin count<=0; out=~out; end
+else
+count=count+1; 
+endmodule
+
+
+
+module Counter_4_Bit(
+    input logic clk,
+    input logic rst,
+    output logic [3:0] count
+    );
+    
+always_ff@(posedge clk) begin
+if(rst==1) count<=0;
+else
+count=count+1;
+
+
+end
+endmodule
