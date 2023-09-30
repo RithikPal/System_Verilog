@@ -1,0 +1,40 @@
+
+module Top_Mod_10_Counter(input logic clk,rst,
+                           output logic [3:0]count
+
+    );
+logic w1;
+one_sec_led o1(clk,rst,w1);
+Mod_10_Counter M1(w1,rst,count);
+endmodule
+
+module one_sec_led(
+    input logic clk,rst,
+    output logic out
+    );
+ logic [26:0]count;
+always_ff@(posedge clk)
+if(!rst) begin count<=0; out<=0; end
+else if(count==62499999) begin count<=0; out=~out; end
+else
+count=count+1; 
+endmodule
+
+module Mod_10_Counter(
+    input logic clk,
+    input logic rst,
+    output logic [3:0] count
+    );
+    
+always_ff@(posedge clk)
+begin
+if(!rst) count<=0;
+else
+begin
+if(count==10)
+count<=0;
+else
+count=count+1;
+end
+end
+endmodule
