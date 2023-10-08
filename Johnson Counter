@@ -1,0 +1,42 @@
+
+module Top_Johnson_Counter( input logic clk,rst,
+                            output logic [3:0]out
+
+    );
+logic w1;    
+one_sec_led o1(clk, rst,w1);
+Johnson_Counter C1(w1,rst,out);
+endmodule
+
+
+module Johnson_Counter  
+  (  
+    input logic clk,  
+    input logic rst,  
+    output logic  [3:0] out  
+  );  
+  
+  always @ (posedge clk) begin  
+      if (!rst)  
+         out <= 1;  
+      else begin  
+        out[3] <= ~out[0];  
+        for (int i = 0; i < 3; i=i+1) begin  
+          out[i] <= out[i+1];  
+        end  
+      end  
+  end  
+endmodule 
+
+module one_sec_led(
+    input logic clk,rst,
+    output logic out
+    );
+ logic [26:0]count;
+always_ff@(posedge clk)
+if(!rst) begin count<=0; out<=0; end
+else if(count==62499999) begin count<=0; out=~out; end
+else
+count=count+1; 
+endmodule
+ 
