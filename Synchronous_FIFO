@@ -1,0 +1,55 @@
+
+`timescale 1ns / 1ps
+
+module Synchronous_FIFO(
+    input logic [7:0] Data_in,
+    input logic rd_en,
+    input logic wr_en,0
+    output logic [7:0] Data_out,
+    input logic rst,
+    input logic clk,
+    output logic FIFO_Full,
+    output logic FIFO_Empty
+    );
+
+  
+ logic [2:0]count;
+ logic [7:0]fifo[7];
+ logic [2:0]rd_ptr,wr_ptr;
+ 
+ always@(posedge clk)begin
+ if(rst)begin
+ Data_out<=0;
+ rd_ptr<=0;
+ wr_ptr<=0;
+ count<=0;
+ end
+ end
+
+always@(posedge clk) begin
+
+if(!FIFO_Full && wr_en)begin
+fifo[wr_ptr]<=Data_in;
+wr_ptr<=wr_ptr+1;
+count<=count+1;
+end
+
+else if(!FIFO_Empty && rd_en)begin
+Data_out<=fifo[rd_ptr];
+rd_ptr<=rd_ptr+1;
+count<=count-1;
+end
+
+else if (wr_ptr == rd_ptr)begin
+count<=count;
+end
+
+else;
+end
+
+assign FIFO_Full = (count== 7)?1'b1:1'b0;
+assign FIFO_Empty = (count== 0)?1'b1:1'b0;
+
+
+endmodule
+ 
